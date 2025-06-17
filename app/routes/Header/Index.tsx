@@ -50,7 +50,7 @@ export default function Index() {
   }
   // return <Welcome />;
   return (
-    <AppBar position="static" color="success">
+    <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -153,7 +153,10 @@ export default function Index() {
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <IconButton
+                onClick={handleOpenUserMenu}
+                sx={{ p: 0, color: "white" }}
+              >
                 {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
                 <AccountCircleIcon fontSize="large" />
               </IconButton>
