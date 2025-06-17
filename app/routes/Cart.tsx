@@ -27,15 +27,39 @@ const Cart = () => {
   }
 
   const setFinalTotal = (obj: any) => {
-    let subTotalvalue = 0
-    let totalValue = 0
+    let subTotalvalue: any = 0
+    let totalValue: any = 0
     Object.keys(obj).forEach((key) => {
       const element = obj[key]
       subTotalvalue = element.price * element.quantity
     })
     totalValue = subTotalvalue + 50
+    subTotalvalue = subTotalvalue.toFixed(2)
     setSubTotal(subTotalvalue)
+    totalValue = totalValue.toFixed(2)
     setTotal(totalValue)
+  }
+
+  const decreaseQuantity = (keyValue: any) => {
+    // console.log(cartList)
+    let obj: any = { ...cartList }
+    let item: any = { ...obj[keyValue] }
+    item.quantity -= 1
+    obj[keyValue] = item
+    console.log(obj)
+    dispatch(setCartList(obj))
+    setFinalTotal(obj)
+  }
+
+  const increaseQuantity = (keyValue: any) => {
+    // console.log(cartList)
+    let obj: any = { ...cartList }
+    let item: any = { ...obj[keyValue] }
+    item.quantity += 1
+    obj[keyValue] = item
+    console.log(obj)
+    dispatch(setCartList(obj))
+    setFinalTotal(obj)
   }
 
   useEffect(() => {
@@ -68,7 +92,8 @@ const Cart = () => {
           </div>
           {Object.keys(cartList).map((key: any, index: any) => {
             const quantity = cartList[key]?.quantity || 1
-            const totalPrice = cartList[key].price * quantity
+            let totalPrice: any = cartList[key].price * quantity
+            totalPrice = totalPrice.toFixed(2)
             return (
               <div className="flex" key={index}>
                 <div className="px-5 py-6 border border-green-200 w-1/6 flex justify-center items-center">
@@ -90,11 +115,23 @@ const Cart = () => {
                     variant="contained"
                     aria-label="Basic button group"
                   >
-                    <Button>
+                    <Button
+                      onClick={() => {
+                        if (quantity !== 1) {
+                          decreaseQuantity(key)
+                        }
+                      }}
+                    >
                       <RemoveIcon fontSize="small" />
                     </Button>
                     <span className="px-6 py-2">{quantity}</span>
-                    <Button>
+                    <Button
+                      onClick={() => {
+                        if (quantity < 15) {
+                          increaseQuantity(key)
+                        }
+                      }}
+                    >
                       <AddIcon fontSize="small" />
                     </Button>
                   </ButtonGroup>
