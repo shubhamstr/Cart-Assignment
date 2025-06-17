@@ -1,30 +1,54 @@
 const express = require("express")
-const { addProduct } = require("../controllers/cart")
+const { addMultipleProduct, getAllProduct } = require("../controllers/cart")
 
 const router = express.Router()
 
-router.get("/", function (req, res) {
-  res.send("Hello from APIv1 root route.")
-  // res
-  //   .send({
-  //     msg: "Products fetched successfully.",
-  //     data: products.data,
-  //   })
-  //   .status(200)
+router.get("/", async function (req, res) {
+  try {
+    const getResp = await getAllProduct()
+    return res
+      .send({
+        msg: "Products added to the cart.",
+        data: getResp,
+      })
+      .status(200)
+  } catch (error) {
+    return res
+      .send({
+        msg: "error while adding product to the cart.",
+        data: error,
+      })
+      .status(200)
+  }
 })
 
-router.post("/", function (req, res) {
-  console.log(req.body)
-  addProduct({
-    id: "1",
-    title: "product1",
-  })
-  res
-    .send({
-      msg: "Products added to the cart.",
-      data: req.body,
-    })
-    .status(200)
+router.post("/", async function (req, res) {
+  try {
+    console.log("req.body", req.body)
+    const addResp = await addMultipleProduct(req.body)
+    if (addResp) {
+      const getResp = await getAllProduct()
+      return res
+        .send({
+          msg: "Products added to the cart.",
+          data: getResp,
+        })
+        .status(200)
+    }
+    return res
+      .send({
+        msg: "error while adding product to the cart.",
+        data: error,
+      })
+      .status(200)
+  } catch (error) {
+    return res
+      .send({
+        msg: "error while adding product to the cart.",
+        data: error,
+      })
+      .status(200)
+  }
 })
 
 module.exports = router
