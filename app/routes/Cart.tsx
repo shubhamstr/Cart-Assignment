@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import Header from "./Header/Index"
 import { Button, ButtonGroup, Container } from "@mui/material"
 import axios from "axios"
@@ -12,15 +12,30 @@ import RemoveIcon from "@mui/icons-material/Remove"
 const Cart = () => {
   const cartList = useSelector((state: any) => state.cart.cartList)
   const dispatch = useDispatch()
+  const [subTotal, setSubTotal] = useState(0)
+  const [total, setTotal] = useState(0)
 
   const fetchCartList = async () => {
     try {
       const { data } = await axios.get(`http://${SERVER_URL}/cart`)
       console.log(data)
       dispatch(setCartList(data.data))
+      setFinalTotal(data.data)
     } catch (error) {
       console.error(error)
     }
+  }
+
+  const setFinalTotal = (obj: any) => {
+    let subTotalvalue = 0
+    let totalValue = 0
+    Object.keys(obj).forEach((key) => {
+      const element = obj[key]
+      subTotalvalue = element.price * element.quantity
+    })
+    totalValue = subTotalvalue + 50
+    setSubTotal(subTotalvalue)
+    setTotal(totalValue)
   }
 
   useEffect(() => {
@@ -95,6 +110,33 @@ const Cart = () => {
               </div>
             )
           })}
+          <div className="flex justify-between mt-10">
+            <div className="flex flex-col">
+              <Button variant="contained" color="error">
+                Update Cart
+              </Button>
+            </div>
+            <div className="flex flex-col w-50">
+              <h2 className="border-b border-green-200 text-right font-semibold mb-2">
+                Cart Total
+              </h2>
+              <p className="mb-2 flex justify-between">
+                <span className="">Subtotal</span>
+                <span className="">Rs. {subTotal}</span>
+              </p>
+              <p className="mb-2 flex justify-between">
+                <span className="">Delivery Charges</span>
+                <span className="">Rs. 50</span>
+              </p>
+              <p className="mb-2 flex justify-between">
+                <span className="">Total</span>
+                <span className="">Rs. {total}</span>
+              </p>
+              <Button variant="contained" color="error">
+                Checkout
+              </Button>
+            </div>
+          </div>
         </Container>
       </div>
     </>
