@@ -8,14 +8,14 @@ router.get("/", async function (req, res) {
     const getResp = await getAllCartList()
     return res
       .send({
-        msg: "Products added to the cart.",
+        msg: "Cart list fetched successfully.",
         data: getResp,
       })
       .status(200)
   } catch (error) {
     return res
       .send({
-        msg: "error while adding product to the cart.",
+        msg: "error while fetching cart list.",
         data: error,
       })
       .status(200)
