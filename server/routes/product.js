@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get("/", function (req, res) {
   console.log(products)
-  res
+  return res
     .send({
       msg: "Products fetched successfully.",
       data: products.data,
