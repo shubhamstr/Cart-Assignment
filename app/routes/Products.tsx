@@ -13,10 +13,12 @@ import axios from "axios"
 import { useSelector, useDispatch } from "react-redux"
 import { setProductList } from "../redux/productSlice"
 import Rating from "@mui/material/Rating"
+import { SERVER_URL } from "../utils/constants"
 
 const Products = () => {
   const productList = useSelector((state: any) => state.product.productList)
   const dispatch = useDispatch()
+
   const fetchProducts = async () => {
     try {
       const response: any = await axios.get(
@@ -24,6 +26,25 @@ const Products = () => {
       )
       console.log(response.data)
       dispatch(setProductList(response.data.products))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const setPayload = async (data: any) => {
+    return [{ key: data.id, val: data }]
+  }
+
+  const addToCart = async (product: any) => {
+    try {
+      // console.log(SERVER_URL)
+      const payload = await setPayload(product)
+      const response: any = await axios.post(
+        `http://${SERVER_URL}/cart`,
+        payload
+      )
+      console.log(response.data)
+      // dispatch(setProductList(response.data.products))
     } catch (error) {
       console.error(error)
     }
@@ -45,8 +66,8 @@ const Products = () => {
           <div className="w-full grid grid-cols-12 gap-4">
             {productList.map((single: any, index: any) => {
               return (
-                <div className="col-span-12 sm:col-span-3">
-                  <Card key={index} sx={{ maxWidth: "100%" }}>
+                <div key={index} className="col-span-12 sm:col-span-3">
+                  <Card sx={{ maxWidth: "100%" }}>
                     <CardMedia
                       component="img"
                       alt="green iguana"
@@ -76,7 +97,13 @@ const Products = () => {
                       </Typography>
                     </CardContent>
                     <CardActions className="flex justify-center mb-3">
-                      <Button variant="contained" size="small">
+                      <Button
+                        variant="contained"
+                        size="small"
+                        onClick={() => {
+                          addToCart(single)
+                        }}
+                      >
                         Add to Cart
                       </Button>
                       {/* <Button variant="contained" size="small">
