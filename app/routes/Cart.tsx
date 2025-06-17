@@ -27,20 +27,24 @@ const Cart = () => {
   }
 
   const setPayload = async (data: any) => {
-    // const obj: any = { ...data }
-    // return Object.keys(data)
-    // return [{ key: data.id, val: obj }]
+    const obj: any = {}
+    Object.keys(data).map((key: any) => {
+      obj[key] = data[key]
+    })
+    // console.log(obj)
+    return obj
   }
 
-  const addToCart = async () => {
+  const updateCart = async () => {
     try {
       // console.log(SERVER_URL)
       const payload = await setPayload(cartList)
-      // const response: any = await axios.post(
-      //   `http://${SERVER_URL}/cart`,
-      //   payload
-      // )
-      // console.log(response.data)
+      // console.log(payload)
+      const response: any = await axios.put(
+        `http://${SERVER_URL}/cart`,
+        payload
+      )
+      console.log(response.data)
     } catch (error) {
       console.error(error)
     }
@@ -194,7 +198,7 @@ const Cart = () => {
           })}
           <div className="flex justify-between mt-10">
             <div className="flex flex-col">
-              <Button variant="contained" color="error" onClick={addToCart}>
+              <Button variant="contained" color="error" onClick={updateCart}>
                 Update Cart
               </Button>
             </div>

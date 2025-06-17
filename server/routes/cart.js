@@ -3,6 +3,7 @@ const {
   addToCartMultiple,
   getAllCartList,
   deleteCart,
+  updateCart,
 } = require("../controllers/cart")
 
 const router = express.Router()
@@ -28,7 +29,7 @@ router.get("/", async function (req, res) {
 
 router.post("/", async function (req, res) {
   try {
-    console.log("req.body", req.body)
+    // console.log("req.body", req.body)
     const addResp = await addToCartMultiple(req.body)
     if (addResp) {
       const getResp = await getAllCartList()
@@ -43,6 +44,31 @@ router.post("/", async function (req, res) {
       .send({
         msg: "error while adding product to the cart.",
         data: error,
+      })
+      .status(200)
+  } catch (error) {
+    return res
+      .send({
+        msg: "error while adding product to the cart.",
+        data: error,
+      })
+      .status(200)
+  }
+})
+
+router.put("/", async function (req, res) {
+  try {
+    // console.log("req.body", req.body)
+    // const keys = Object.keys(req.body).map((key) => key)
+    // console.log(keys)
+    // const deleteResp = await deleteCart(keys)
+    // console.log(deleteResp)
+    const addResp = await updateCart(req.body)
+    console.log(addResp)
+    return res
+      .send({
+        msg: "Products updated to the cart.",
+        data: addResp,
       })
       .status(200)
   } catch (error) {
