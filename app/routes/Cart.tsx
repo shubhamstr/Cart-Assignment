@@ -26,6 +26,45 @@ const Cart = () => {
     }
   }
 
+  const setPayload = async (data: any) => {
+    // const obj: any = { ...data }
+    // return Object.keys(data)
+    // return [{ key: data.id, val: obj }]
+  }
+
+  const addToCart = async () => {
+    try {
+      // console.log(SERVER_URL)
+      const payload = await setPayload(cartList)
+      // const response: any = await axios.post(
+      //   `http://${SERVER_URL}/cart`,
+      //   payload
+      // )
+      // console.log(response.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const deleteCart = async (key: any) => {
+    try {
+      // console.log(SERVER_URL)
+      const payload = {
+        data: {
+          key: key,
+        },
+      }
+      const response: any = await axios.delete(
+        `http://${SERVER_URL}/cart`,
+        payload
+      )
+      console.log(response.data)
+      fetchCartList()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const setFinalTotal = (obj: any) => {
     let subTotalvalue: any = 0
     let totalValue: any = 0
@@ -140,7 +179,13 @@ const Cart = () => {
                   Rs. {totalPrice}
                 </div>
                 <div className="px-5 py-6 border border-green-200 w-1/6 flex justify-center items-center">
-                  <Button variant="contained" color="error">
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => {
+                      deleteCart(key)
+                    }}
+                  >
                     <DeleteIcon fontSize="small" />
                   </Button>
                 </div>
@@ -149,7 +194,7 @@ const Cart = () => {
           })}
           <div className="flex justify-between mt-10">
             <div className="flex flex-col">
-              <Button variant="contained" color="error">
+              <Button variant="contained" color="error" onClick={addToCart}>
                 Update Cart
               </Button>
             </div>
