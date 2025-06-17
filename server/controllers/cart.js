@@ -1,16 +1,16 @@
 const nodeCache = require("../data/nodeCache")
 
-const addProduct = async (payload) => {
+const addToCart = async (payload) => {
   try {
     let resp = nodeCache.set(payload.id, payload)
-    console.log("addProduct resp", resp)
+    console.log("addToCart resp", resp)
     return resp
   } catch (error) {
     return error
   }
 }
 
-const addMultipleProduct = async (payload) => {
+const addToCartMultiple = async (payload) => {
   try {
     let resp = nodeCache.mset(payload)
     return resp
@@ -19,16 +19,16 @@ const addMultipleProduct = async (payload) => {
   }
 }
 
-const getAllProduct = async () => {
+const getAllCartList = async () => {
   try {
     const keys = nodeCache.keys()
-    console.log("getAllProduct keys", keys)
+    console.log("getAllCartList keys", keys)
     let resp = nodeCache.mget(keys)
-    console.log("getAllProduct resp", resp)
+    console.log("getAllCartList resp", resp)
     return resp
   } catch (error) {
     return error
   }
 }
 
-module.exports = { addProduct, addMultipleProduct, getAllProduct }
+module.exports = { addToCart, addToCartMultiple, getAllCartList }

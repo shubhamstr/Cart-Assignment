@@ -1,11 +1,11 @@
 const express = require("express")
-const { addMultipleProduct, getAllProduct } = require("../controllers/cart")
+const { addToCartMultiple, getAllCartList } = require("../controllers/cart")
 
 const router = express.Router()
 
 router.get("/", async function (req, res) {
   try {
-    const getResp = await getAllProduct()
+    const getResp = await getAllCartList()
     return res
       .send({
         msg: "Products added to the cart.",
@@ -25,9 +25,9 @@ router.get("/", async function (req, res) {
 router.post("/", async function (req, res) {
   try {
     console.log("req.body", req.body)
-    const addResp = await addMultipleProduct(req.body)
+    const addResp = await addToCartMultiple(req.body)
     if (addResp) {
-      const getResp = await getAllProduct()
+      const getResp = await getAllCartList()
       return res
         .send({
           msg: "Products added to the cart.",
