@@ -32,7 +32,9 @@ const Products = () => {
   }
 
   const setPayload = async (data: any) => {
-    return [{ key: data.id, val: data }]
+    const obj: any = { ...data }
+    obj["quantity"] = 1
+    return [{ key: data.id, val: obj }]
   }
 
   const addToCart = async (product: any) => {
