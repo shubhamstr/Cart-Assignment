@@ -1,5 +1,5 @@
 import React from "react"
-import Header from "../Header/Index"
+import Header from "./Header/Index"
 import {
   Card,
   CardMedia,

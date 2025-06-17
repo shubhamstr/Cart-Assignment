@@ -58,7 +58,10 @@ export default function Index() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            // href="#app-bar-with-responsive-menu"
+            onClick={() => {
+              navigate("/")
+            }}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -67,6 +70,7 @@ export default function Index() {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              cursor: "pointer",
             }}
           >
             LOGO
