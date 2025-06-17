@@ -1,13 +1,11 @@
 const express = require("express")
+const products = require("../data/products.json")
 
 const router = express.Router()
 
 router.get("/", function (req, res) {
-  res.send("Hello from APIv1 root route.")
-})
-
-router.get("/users", function (req, res) {
-  res.send("List of APIv1 users.")
+  console.log(products)
+  res.send(products.data).status(200)
 })
 
 module.exports = router

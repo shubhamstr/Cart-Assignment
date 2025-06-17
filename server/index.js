@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
 })
 
 app.use(`/${API_PREFIX}/cart`, cart)
-app.use(`/${API_PREFIX}/product`, product)
+app.use(`/${API_PREFIX}/products`, product)
 
 app.listen(port, () => {
   console.log(`Backend server listening on port ${port}`)
