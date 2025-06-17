@@ -1,5 +1,9 @@
 const express = require("express")
-const { addToCartMultiple, getAllCartList } = require("../controllers/cart")
+const {
+  addToCartMultiple,
+  getAllCartList,
+  deleteCart,
+} = require("../controllers/cart")
 
 const router = express.Router()
 
@@ -45,6 +49,26 @@ router.post("/", async function (req, res) {
     return res
       .send({
         msg: "error while adding product to the cart.",
+        data: error,
+      })
+      .status(200)
+  }
+})
+
+router.delete("/", async function (req, res) {
+  try {
+    console.log("req.body", req.body)
+    const addResp = await deleteCart(req.body.key)
+    return res
+      .send({
+        msg: "Products deleted from the cart.",
+        data: addResp,
+      })
+      .status(200)
+  } catch (error) {
+    return res
+      .send({
+        msg: "error while deleting product from the cart.",
         data: error,
       })
       .status(200)

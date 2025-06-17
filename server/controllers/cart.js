@@ -31,4 +31,14 @@ const getAllCartList = async () => {
   }
 }
 
-module.exports = { addToCart, addToCartMultiple, getAllCartList }
+const deleteCart = async (payload) => {
+  try {
+    let resp = nodeCache.del(payload)
+    console.log("deleteCart resp", resp)
+    return resp
+  } catch (error) {
+    return error
+  }
+}
+
+module.exports = { addToCart, addToCartMultiple, getAllCartList, deleteCart }
