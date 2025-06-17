@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import Header from "./Header/Index"
-import { Button, ButtonGroup, Container } from "@mui/material"
+import { Button, ButtonGroup, Container, IconButton } from "@mui/material"
 import axios from "axios"
 import { SERVER_URL } from "../utils/constants"
 import { useSelector, useDispatch } from "react-redux"
@@ -8,12 +8,45 @@ import { setCartList } from "../redux/cartSlice"
 import DeleteIcon from "@mui/icons-material/Delete"
 import AddIcon from "@mui/icons-material/Add"
 import RemoveIcon from "@mui/icons-material/Remove"
+import Snackbar, { type SnackbarCloseReason } from "@mui/material/Snackbar"
+import CloseIcon from "@mui/icons-material/Close"
 
 const Cart = () => {
   const cartList = useSelector((state: any) => state.cart.cartList)
   const dispatch = useDispatch()
   const [subTotal, setSubTotal] = useState(0)
   const [total, setTotal] = useState(0)
+  const [open, setOpen] = useState(false)
+  const [msg, setMsg] = useState(false)
+
+  const handleClick = (msgVal: any) => {
+    setOpen(true)
+    setMsg(msgVal)
+  }
+
+  const handleClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason
+  ) => {
+    if (reason === "clickaway") {
+      return
+    }
+
+    setOpen(false)
+  }
+
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  )
 
   const fetchCartList = async () => {
     try {
@@ -45,6 +78,7 @@ const Cart = () => {
         payload
       )
       console.log(response.data)
+      handleClick("Cart is updated.")
     } catch (error) {
       console.error(error)
     }
@@ -63,6 +97,7 @@ const Cart = () => {
         payload
       )
       console.log(response.data)
+      handleClick("Product removed from the cart.")
       fetchCartList()
     } catch (error) {
       console.error(error)
@@ -92,6 +127,7 @@ const Cart = () => {
     console.log(obj)
     dispatch(setCartList(obj))
     setFinalTotal(obj)
+    handleClick("Quantity updated.")
   }
 
   const increaseQuantity = (keyValue: any) => {
@@ -103,6 +139,7 @@ const Cart = () => {
     console.log(obj)
     dispatch(setCartList(obj))
     setFinalTotal(obj)
+    handleClick("Quantity updated.")
   }
 
   useEffect(() => {
@@ -225,6 +262,13 @@ const Cart = () => {
           </div>
         </Container>
       </div>
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        message={msg}
+        action={action}
+      />
     </>
   )
 }
