@@ -1,5 +1,5 @@
 import type { Route } from "./+types/home"
-// import { Welcome } from "./welcome/welcome";
+// import { Welcome } from "../welcome/welcome";
 import Header from "./Header/Index"
 import Typography from "@mui/material/Typography"
 
