@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import Header from "./Header/Index"
 import {
   Card,
@@ -8,7 +8,10 @@ import {
   CardActions,
   Button,
   Container,
+  IconButton,
 } from "@mui/material"
+import Snackbar, { type SnackbarCloseReason } from "@mui/material/Snackbar"
+import CloseIcon from "@mui/icons-material/Close"
 import axios from "axios"
 import { useSelector, useDispatch } from "react-redux"
 import { setProductList } from "../redux/productSlice"
@@ -18,6 +21,37 @@ import { SERVER_URL } from "../utils/constants"
 const Products = () => {
   const productList = useSelector((state: any) => state.product.productList)
   const dispatch = useDispatch()
+  const [open, setOpen] = useState(false)
+  const [msg, setMsg] = useState(false)
+
+  const handleClick = (msgVal: any) => {
+    setOpen(true)
+    setMsg(msgVal)
+  }
+
+  const handleClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason
+  ) => {
+    if (reason === "clickaway") {
+      return
+    }
+
+    setOpen(false)
+  }
+
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  )
 
   const fetchProducts = async () => {
     try {
@@ -46,6 +80,7 @@ const Products = () => {
         payload
       )
       console.log(response.data)
+      handleClick("Added product to the cart.")
       // dispatch(setProductList(response.data.products))
     } catch (error) {
       console.error(error)
@@ -119,6 +154,13 @@ const Products = () => {
           </div>
         </Container>
       </div>
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        message={msg}
+        action={action}
+      />
     </>
   )
 }
