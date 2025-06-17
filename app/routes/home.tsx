@@ -1,6 +1,7 @@
 import type { Route } from "./+types/home"
 // import { Welcome } from "../welcome/welcome";
 import Header from "../Header/Index"
+import Typography from "@mui/material/Typography"
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -14,6 +15,11 @@ export default function Home() {
   return (
     <>
       <Header />
+      <div className="flex justify-center items-center h-[calc(100vh-70px)]">
+        <Typography variant="h1" className="text-center" gutterBottom>
+          Welcome to Shopping Cart
+        </Typography>
+      </div>
     </>
   )
 }
