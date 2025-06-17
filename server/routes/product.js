@@ -5,7 +5,12 @@ const router = express.Router()
 
 router.get("/", function (req, res) {
   console.log(products)
-  res.send(products.data).status(200)
+  res
+    .send({
+      msg: "Products fetched successfully.",
+      data: products.data,
+    })
+    .status(200)
 })
 
 module.exports = router
