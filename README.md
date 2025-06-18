@@ -90,13 +90,13 @@ Built with ❤️ using React Router.
 
 ### start the project
 
-install all required packages usin npm install
+install all required packages using npm install
 
 - frontend
 
 adjust contants file 
 
-to start the fronend use command "npm run dev"
+to start the frontend use command "npm run dev"
 
 - server
 
