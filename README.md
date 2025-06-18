@@ -85,3 +85,42 @@ This template comes with [Tailwind CSS](https://tailwindcss.com/) already config
 ---
 
 Built with ❤️ using React Router.
+
+
+
+### start the project
+
+install all required packages usin npm install
+
+- frontend
+
+adjust contants file 
+
+to start the fronend use command "npm run dev"
+
+- server
+
+go to server folder
+
+adjust .env file 
+
+to start the server use command "npm run dev"
+
+
+### Tools used
+
+node-cache - for cart storage
+
+dummyjson.com - for getting dummy products data
+
+React Router - for routing
+
+tailwind css - for css
+
+Redux - for managing global state
+
+material icons - for using icons
+
+material UI - for UI components
+
+
