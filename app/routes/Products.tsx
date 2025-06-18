@@ -110,6 +110,7 @@ const Products = () => {
                       alt="green iguana"
                       image={single?.images?.[0]}
                       sx={{ height: "200px", objectFit: "contain" }}
+                      loading="lazy"
                     />
                     <CardContent>
                       <Rating
