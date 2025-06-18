@@ -80,7 +80,7 @@ const Products = () => {
         payload
       )
       console.log(response.data)
-      handleClick("Added product to the cart.")
+      handleClick("Added to Cart.")
       // dispatch(setProductList(response.data.products))
     } catch (error) {
       console.error(error)
