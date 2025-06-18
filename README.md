@@ -94,7 +94,7 @@ install all required packages using npm install
 
 - frontend
 
-adjust contants file 
+adjust constants file 
 
 to start the frontend use command "npm run dev"
 
