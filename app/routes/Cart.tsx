@@ -60,9 +60,12 @@ const Cart = () => {
   }
 
   const setPayload = async (data: any) => {
-    const obj: any = {}
+    const obj: any = []
     Object.keys(data).map((key: any) => {
-      obj[key] = data[key]
+      obj.push({
+        key: key,
+        val: data[key],
+      })
     })
     // console.log(obj)
     return obj
@@ -72,7 +75,7 @@ const Cart = () => {
     try {
       // console.log(SERVER_URL)
       const payload = await setPayload(cartList)
-      // console.log(payload)
+      console.log(payload)
       const response: any = await axios.put(
         `http://${SERVER_URL}/cart`,
         payload
@@ -233,9 +236,17 @@ const Cart = () => {
               </div>
             )
           })}
+          {Object.keys(cartList).length === 0 && (
+            <div className="flex justify-center px-5 py-6">Cart is empty.</div>
+          )}
           <div className="flex justify-between mt-10">
             <div className="flex flex-col">
-              <Button variant="contained" color="error" onClick={updateCart}>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={updateCart}
+                disabled={Object.keys(cartList).length === 0}
+              >
                 Update Cart
               </Button>
             </div>
